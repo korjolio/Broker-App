@@ -1,0 +1,3 @@
+$(function () {
+    $('#modalCliente').modal('show');
+}); 

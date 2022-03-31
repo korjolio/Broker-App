@@ -1,0 +1,63 @@
+{% extends 'brokerApp/base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <h3 class="text-dark mb-4 mt-4">Pólizas</h3>
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <a href="{% url "brokerApp:poliza_crear" %}" class="btn btn-outline-success align-items-center float-end">Crear nueva póliza...</a>
+            </div>
+            <div class="card-body">                        
+                <div class="table-striped table mt-2 mb-5" id="#tabla" role="grid" aria-describedby="dataTable_info">
+                    {% if object_list %}
+                    <table id="tabla" class="table table-hover" style="width:100%">
+                        <thead> 
+                        <tr>
+                            <th>Póliza</th>
+                            <th>Cliente</th>
+                            <th>Inicio Vigencia</th>
+                            <th>Fin Vigencia</th>
+                            <th>Producto</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for p in object_list %}
+                                <td>{{ p.nro_poliza }}</td>
+                                <td>{{ p.cliente }}</td>
+                                <td>{{ p.ini_vig }}</td>
+                                <td>{{ p.fin_vig }}</td>
+                                <td>{{ p.producto }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-primary btn-sm">Ver
+                                        </button>
+                                        &nbsp;
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button"
+                                                    class="btn btn-secondary dropdown-toggle btn-sm"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">Más
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <li><a class="dropdown-item" href="#">Editar</a></li>
+                                                <!-- <li><a class="dropdown-item" href="#">Ver Propuestas</a></li>
+                                                <li><a class="dropdown-item" href="#">Ver Polizas</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Reserva</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Propuesta</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Póliza</a></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">Actualmente no hay registros...</div>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

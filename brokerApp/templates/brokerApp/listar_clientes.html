@@ -1,0 +1,99 @@
+{% extends "brokerApp/base.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <h3 class="text-dark mb-4 mt-4">Clientes</h3>
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <a href="{% url "brokerApp:cliente_crear" %}" class="btn btn-outline-success align-items-center float-end">Crear nuevo cliente...</a>
+            </div>
+            <div class="card-body">                        
+                <div class="table-striped table mt-2 mb-5" id="#tabla" role="grid" aria-describedby="dataTable_info">
+                    {% if object_list %}
+                    <table id="tabla" class="table table-hover" style="width:100%">
+                        <thead> 
+                        <tr>
+                            <th scope="col" style="width:30%;">Cliente</th>
+                            <th scope="col" style="width:10%;">RUT</th>
+                            <th scope="col" style="width:20%;">Email</th>
+                            <th scope="col" style="width:20%;">Celular</th>
+                            <th scope="col" style="width:10%;">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for c in object_list %}
+                                <td>{{ c.nombre }}</td>
+                                <td>{{ c.rut }}</td>
+                                <td>{{ c.email }}</td>
+                                <td>{{ c.celular }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-primary btn-sm">Ver
+                                        </button>
+                                        &nbsp;
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button"
+                                                    class="btn btn-secondary dropdown-toggle btn-sm"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">Más
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <li><a class="dropdown-item" href="#">Editar</a></li>
+                                                <!-- <li><a class="dropdown-item" href="#">Ver Propuestas</a></li>
+                                                <li><a class="dropdown-item" href="#">Ver Polizas</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Reserva</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Propuesta</a></li>
+                                                <li><a class="dropdown-item" href="#">Crear Póliza</a></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">Actualmente no hay registros...</div>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+  <!-- Modal -->
+  {% load crispy_forms_tags %}
+  <div class="modal fade" id="modalCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <form method="POST" action=".">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Crear Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+            {% csrf_token %}
+                        
+            {{ form | crispy  }}
+        
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+    $(function () {
+        $('.select2').select2({
+            placeholder: 'Seleccione una opción'
+        });            
+    });
+</script>
+
+{% endblock %}
